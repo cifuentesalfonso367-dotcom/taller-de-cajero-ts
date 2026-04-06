@@ -21,4 +21,36 @@ export class cajeroServices {
         const cuenta = this.buscarCuenta(numero_cuenta);
         console.log(`El saldo de la cuenta ${cuenta.titular} es: $${cuenta.obtenerSaldo()}`);
     }
+     depositar(numeroCuenta: string, monto: number): void {
+    if (monto <= 0) {
+      console.log("El monto debe ser mayor a 0.");
+      return;
+    }
+    const cuenta = this.buscarCuenta(numeroCuenta);
+    cuenta.depositar(monto);
+    console.log(`Depósito exitoso. Nuevo saldo: $${cuenta.obtenerSaldo()}`);
+  }
+
+  retirar(numeroCuenta: string, monto: number): void {
+    if (monto <= 0) {
+      console.log("El monto debe ser mayor a 0.");
+      return;
+    }
+
+    if (monto > this.fondos) {
+      console.log(`El cajero no tiene fondos suficientes. Disponible: $${this.fondos}`);
+      return;
+    }
+
+    const cuenta = this.buscarCuenta(numeroCuenta);
+    const exitoso = cuenta.retirar(monto);
+
+    if (!exitoso) {
+      console.log(`Fondos insuficientes en la cuenta. Saldo actual: $${cuenta.obtenerSaldo()}`);
+      return;
+    }
+
+    this.fondos -= monto;
+    console.log(`Retiro exitoso de $${monto}. Saldo restante: $${cuenta.obtenerSaldo()}`);
+  }
 }
