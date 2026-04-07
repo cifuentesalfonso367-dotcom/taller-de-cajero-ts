@@ -1,5 +1,5 @@
 export interface Icuenta { 
-    numero_cuenta: string;
+    numeroCuenta: string;
     titular: string;
     obtenerSaldo: () => number;
     depositar:(monto: number) => void;
@@ -7,14 +7,14 @@ export interface Icuenta {
 }
 
 export class CuentaBancaria implements Icuenta {
-    numero_cuenta: string;
+    numeroCuenta: string;
     titular: string;
     private saldo: number; 
 
 
     
   constructor(numeroCuenta: string, titular: string, saldoInicial: number) {
-    this.numero_cuenta = numeroCuenta;
+    this.numeroCuenta = numeroCuenta;
     this.titular = titular;
     this.saldo = saldoInicial;
     }

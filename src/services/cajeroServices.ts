@@ -1,27 +1,31 @@
-import { CuentaBancaria } from "../models/cuentaBancaria";
-import { validarExistencia } from "../utils/validaciones";
+import { CuentaBancaria } from "../models/cuentaBancaria.js";
+import { validarExistencia } from "../utils/validaciones.js";
 
-export class cajeroServices {
-    private fondos: number;
-    private cuentas: CuentaBancaria[];
+export class CajeroService {
+  private fondos: number;
+  private cuentas: CuentaBancaria[];
 
-    constructor(fondosIniciales: number) {
-        this.fondos = fondosIniciales;
-        this.cuentas = [];
-    }
-    registrarCuenta(cuenta: CuentaBancaria): void {
-        this.cuentas.push(cuenta);
-        console.log(`Cuenta ${cuenta.numero_cuenta} registrada para ${cuenta.titular}.`);
-    }
-    buscarCuenta(numeroCuenta: string): CuentaBancaria {
-        const cuenta = this.cuentas.find(c => c.numero_cuenta === numeroCuenta);
-        return validarExistencia(cuenta, `cuenta ${numeroCuenta} no existe.`);
-    }
-    consultarSaldo (numero_cuenta: string): void {
-        const cuenta = this.buscarCuenta(numero_cuenta);
-        console.log(`El saldo de la cuenta ${cuenta.titular} es: $${cuenta.obtenerSaldo()}`);
-    }
-     depositar(numeroCuenta: string, monto: number): void {
+  constructor(fondosIniciales: number) {
+    this.fondos = fondosIniciales;
+    this.cuentas = [];
+  }
+
+  registrarCuenta(cuenta: CuentaBancaria): void {
+    this.cuentas.push(cuenta);
+    console.log(`Cuenta ${cuenta.numeroCuenta} registrada para ${cuenta.titular}.`);
+  }
+
+  buscarCuenta(numeroCuenta: string): CuentaBancaria {
+    const cuenta = this.cuentas.find(c => c.numeroCuenta === numeroCuenta);
+    return validarExistencia(cuenta, `La cuenta ${numeroCuenta} no existe.`);
+  }
+
+  consultarSaldo(numeroCuenta: string): void {
+    const cuenta = this.buscarCuenta(numeroCuenta);
+    console.log(`Saldo de ${cuenta.titular}: $${cuenta.obtenerSaldo()}`);
+  }
+
+  depositar(numeroCuenta: string, monto: number): void {
     if (monto <= 0) {
       console.log("El monto debe ser mayor a 0.");
       return;
